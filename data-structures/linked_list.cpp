@@ -11,6 +11,7 @@ struct Node
 Node* Insert(Node *head, int data); 
 Node* InsertNth(Node *head, int data, int position);
 Node* Delete(Node *head, int position);
+Node* Reverse(Node *head);
 void ReversePrint(Node *head);
 void Spit(Node *head);
 
@@ -27,18 +28,33 @@ int main() {
     //head = InsertNth(head, 69, 6);
     //head = Delete(head, 4);
 
-    //Spit(head);
-    ReversePrint(head);
+    head = Reverse(head);
+    Spit(head);
+    //ReversePrint(head);
+}
+
+Node* Reverse(Node *head) {
+    cout << "reversing: " << head->data << endl;
+    Spit(head);
+    if (head->next == NULL) {
+        return head;
+    }
+
+    Node *temp = head;
+    head = Reverse(temp->next);
+    temp->next = NULL;
+    head->next = temp;
+    Spit(head);
+    return temp;
 }
 
 void ReversePrint(Node *head) {
     if (head == NULL) {
         return;
     }
-    else {
-        ReversePrint(head->next);
-        cout << head->data << endl;
-    }
+
+    ReversePrint(head->next);
+    cout << head->data << endl;
 }
 
 Node* Delete(Node *head, int position) {
