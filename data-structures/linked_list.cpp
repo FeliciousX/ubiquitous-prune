@@ -10,10 +10,11 @@ struct Node
 
 Node* Insert(Node *head, int data); 
 Node* InsertNth(Node *head, int data, int position);
+Node* Delete(Node *head, int position);
+void ReversePrint(Node *head);
 void Spit(Node *head);
 
 int main() {
-    cout << "Hello world!" << endl;
     Node *head = NULL;
 
     head = Insert(head, 0);
@@ -23,10 +24,43 @@ int main() {
     head = Insert(head, 4);
     head = Insert(head, 5);
 
-    head = InsertNth(head, 69, 6);
+    //head = InsertNth(head, 69, 6);
+    //head = Delete(head, 4);
 
-    Spit(head);
+    //Spit(head);
+    ReversePrint(head);
+}
 
+void ReversePrint(Node *head) {
+    if (head == NULL) {
+        return;
+    }
+    else {
+        ReversePrint(head->next);
+        cout << head->data << endl;
+    }
+}
+
+Node* Delete(Node *head, int position) {
+    Node* current = head;
+
+    if (position == 0) {
+        current = head->next;
+        delete head;
+        return current;
+    }
+
+    for(int i = 0; i < position && current != NULL; i++) {
+        if (i+1 == position) {
+            Node* temp = current->next;
+            current->next = temp->next;
+            break;
+        }
+
+        current = current->next;
+    }
+
+    return head;
 }
 
 Node* InsertNth(Node *head, int data, int position) {
@@ -38,7 +72,7 @@ Node* InsertNth(Node *head, int data, int position) {
         newNode->next = head;
         return newNode;
     }
-    
+
     for (int i = 0; i < position && current != NULL; i++) {
         if (i+1 == position) {
             newNode->next = current->next;
@@ -48,7 +82,7 @@ Node* InsertNth(Node *head, int data, int position) {
 
         current = current->next;
     }
-    
+
     return head;
 }
 
