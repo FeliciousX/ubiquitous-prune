@@ -12,6 +12,7 @@ Node* Insert(Node *head, int data);
 Node* InsertNth(Node *head, int data, int position);
 Node* Delete(Node *head, int position);
 Node* Reverse(Node *head);
+Node* ReverseRec(Node *head);
 void ReversePrint(Node *head);
 void Spit(Node *head);
 
@@ -28,9 +29,21 @@ int main() {
     //head = InsertNth(head, 69, 6);
     //head = Delete(head, 4);
 
-    head = Reverse(head);
+    head = ReverseRec(head);
     Spit(head);
     //ReversePrint(head);
+}
+
+Node* ReverseRec(Node *head) {
+    if (head == NULL || head->next == NULL) {
+        return head;
+    }
+
+    Node* newHead = ReverseRec(head->next);
+    Node* p = head->next;
+    p->next = head;
+    head->next = NULL;
+    return newHead;
 }
 
 Node* Reverse(Node *head) {
